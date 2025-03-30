@@ -9,7 +9,7 @@ interface PublishToGithubProps {
 export const PublishToGithub = ({ websiteId, pages }: PublishToGithubProps) => {
   const handleDeploy = async () => {
     try {
-      const response = await fetch("/api/deploy/github", {
+      const response = await fetch("/api/deploy/github-pages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
