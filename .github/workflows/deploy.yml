@@ -11,9 +11,12 @@ jobs:
       contents: write
       pages: write
       id-token: write
+      actions: write
     
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     
     - name: Setup Node.js
       uses: actions/setup-node@v3
@@ -39,15 +42,18 @@ jobs:
       if: success()
       run: npx surge ./dist ${{ secrets.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
 
+    - name: Configure GitHub Pages
+      uses: actions/configure-pages@v3
+
     - name: Deploy to GitHub Pages
+      uses: actions/deploy-pages@v2
       if: github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GH_PAT }}
-        publish_dir: ./dist
-        publish_branch: gh-pages
-        force_orphan: true
-        full_commit_message: 'Deploy to GitHub Pages: ${{ github.sha }}'
+        token: ${{ github.token }}
+        target-branch: gh-pages
+        publish-dir: ./dist
+        artifact-name: github-pages
+        clean: true
 
     - name: Deploy to Vercel
       if: success()
