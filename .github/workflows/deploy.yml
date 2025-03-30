@@ -24,6 +24,9 @@ jobs:
 
     - name: Build Project
       run: npm run build
+      env:
+        VITE_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        VITE_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
 
     - name: Deploy to Surge
       if: success()
