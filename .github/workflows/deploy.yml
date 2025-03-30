@@ -24,3 +24,13 @@ jobs:
 
     - name: Build Project
       run: npm run build
+
+    - name: Deploy to Surge
+      if: success()
+      run: npx surge ./dist ${{ secrets.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
+
+    - name: Deploy to Vercel
+      if: success()
+      run: |
+        npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }}
+        npx vercel alias set ${{ secrets.VERCEL_PROJECT_ID }} ${{ secrets.VERCEL_ALIAS }}
