@@ -27,6 +27,9 @@ jobs:
     - name: Install pnpm
       run: npm install -g pnpm@10.0.0
 
+    - name: Install Vercel CLI
+      run: npm install -g vercel@latest
+
     - name: Install Dependencies
       run: pnpm install --frozen-lockfile
 
@@ -54,5 +57,5 @@ jobs:
     - name: Deploy to Vercel
       if: success()
       run: |
-        npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }}
-        npx vercel alias set ${{ secrets.VERCEL_PROJECT_ID }} ${{ secrets.VERCEL_ALIAS }}
+        npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_SCOPE }} --confirm --yes
+        npx vercel alias set $(npx vercel -t ${{ secrets.VERCEL_TOKEN }} -S ${{ secrets.VERCEL_SCOPE }} --yes) ${{ secrets.VERCEL_ALIAS }}
