@@ -1,0 +1,16 @@
+[
+  {
+    "uuid": "product-collection-1",
+    "name": "Product Collection Grid",
+    "category": "marketing",
+    "preview": "/previews/product-collection-1.PNG",
+    "path": "/product-collection-1.html"
+  },
+  {
+    "uuid": "about-1",
+    "name": "About Section",
+    "category": "marekting",
+    "preview": "/previews/product-collection-1.PNG",
+    "path": "/about-1.html"
+  }
+]
