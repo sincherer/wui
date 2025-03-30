@@ -45,25 +45,11 @@ jobs:
         name: dist
         path: ./dist
 
-    - name: Upload Pages Artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: ./dist
 
     - name: Deploy to Surge
       if: success()
       run: npx surge ./dist ${{ secrets.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
 
-    - name: Configure GitHub Pages
-      uses: actions/configure-pages@v3
-      with:
-        static_site_git_branch: gh-pages
-
-    - name: Deploy to GitHub Pages
-      uses: actions/deploy-pages@v3
-      with:
-        token: ${{ github.token }}
-        publish-dir: ./dist
 
     - name: Deploy to Vercel
       if: success()
