@@ -39,6 +39,12 @@ jobs:
         VITE_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         VITE_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
 
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: ./dist
+
     - name: Upload Pages Artifact
       uses: actions/upload-pages-artifact@v2
       with:
