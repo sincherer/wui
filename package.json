@@ -16,6 +16,10 @@
   ],
   "main": "dist/core.js",
   "sideEffects": false,
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
