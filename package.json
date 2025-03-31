@@ -213,7 +213,7 @@
     "workerDirectory": "public"
   },
   "engines": {
-  "node": "20.18.0",
-  "pnpm": "10.0.0"
+    "node": "20.18.0",
+    "pnpm": "10.0.0"
   }
 }

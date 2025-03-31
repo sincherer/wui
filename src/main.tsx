@@ -1,6 +1,7 @@
 import { DevTools } from "jotai-devtools";
 import "jotai-devtools/styles.css";
 import React, { lazy, useEffect, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import ChaiBuilderDefault from "./Editor.tsx"
@@ -26,14 +27,20 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const user = await getCurrentUser(); // Check if user is logged in
+        const user = await getCurrentUser();
         setIsAuthenticated(!!user);
       } catch (error) {
+        console.error('Auth error:', error);
         setIsAuthenticated(false);
+        return Promise.reject(error);
       }
     };
 
-    checkAuth();
+    checkAuth().catch((error) => {
+          console.error('Authentication error:', error);
+          setIsAuthenticated(false);
+          return Promise.reject(error);
+        });
   }, []);
 
   if (isAuthenticated === null) {
@@ -41,7 +48,9 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   }
 
   return isAuthenticated ? (
-    <>{children}</>
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      {children}
+    </ErrorBoundary>
   ) : (
     <Navigate to="/login" replace />
   );
@@ -50,7 +59,16 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
 const router = createBrowserRouter([
   {
     path: "/",
+
     element: <LandingPage />,
+  },
+  {
+    path: "/wui",
+    element: <Navigate to="/" replace />
+  },
+  {
+    path: "*",
+    element: <Navigate to="/" replace />
   },
   {
     path: "/dashboard",
@@ -112,6 +130,6 @@ async function enableMocking() {
       {import.meta.env.VITE_CLARITY_ID && (
         <MicrosoftClarity clarityId={import.meta.env.VITE_CLARITY_ID} />
       )}
-    </React.StrictMode>,
+    </React.StrictMode>
   );
 });
