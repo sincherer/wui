@@ -14,6 +14,7 @@ import LoginPage from "./core/pages/LoginPage.tsx" // Import your login page
 import SignUpPage from "./core/pages/SignUpPage.tsx"; // Import your sign-up page
 import { getCurrentUser } from "./core/lib/auth"; // Import auth utility
 import LandingPage from "./core/pages/LandingPage.tsx";
+import Editor from "./Editor.tsx"; 
 import "./index.css";
 
 // Lazy-loaded components
@@ -41,7 +42,8 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
           setIsAuthenticated(false);
           return Promise.reject(error);
         });
-  }, []);
+  }, []
+);
 
   if (isAuthenticated === null) {
     return <div>Loading...</div>; // Show a loading spinner while checking auth
@@ -58,8 +60,12 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/website/:websiteId/editor",
+    element: <Editor />,
+  },
 
+  {
+    path: "/",
     element: <LandingPage />,
   },
   {
@@ -110,7 +116,10 @@ const router = createBrowserRouter([
     path: "/website/:websiteId/:pageName/preview",
     element: <Preview />,
   },
-]);
+],
+{
+  basename: '/wui/'
+});
 
 async function enableMocking() {
   if (import.meta.env.MODE !== "development") {

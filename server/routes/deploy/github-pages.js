@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
  res.json({
  repoUrl: repo.data.html_url,
- pageUrl: `https://${repo.data.owner.login}.github.io/${repo.data.name}`
+ pageUrl: `https://${repo.data.owner.login}.github.io/${repo.data.name}/wui/website/${websiteId}/editor`
  });
 
  } catch (error) {
