@@ -5,8 +5,10 @@ on:
     branches: [main]
 
 jobs:
-  build-and-test:
+  deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
     permissions:
       contents: write
       pages: write
@@ -22,6 +24,11 @@ jobs:
     - name: Clean dependencies
       run: rm -rf node_modules pnpm-lock.yaml
 
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20.18.0
+
     - name: Install pnpm
       run: npm install -g pnpm@10.0.0
 
@@ -33,15 +40,6 @@ jobs:
       env:
         VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 20.18.0
-
-    - name: Install pnpm
-      run: npm install -g pnpm@10.0.0
-
 
     - name: Install Dependencies
       run: pnpm install --frozen-lockfile
