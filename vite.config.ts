@@ -5,7 +5,7 @@ import dts from "vite-plugin-dts";
 
 export default defineConfig({
   plugins: [react()],
-  base: '/',
+  base: '/wui/',
   build: {
     emptyOutDir: true,
     root: './',
