@@ -25,7 +25,7 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
 
   const handleServiceAuth = async (service: string, credentials: Record<string, string>) => {
     try {
-      const response = await fetch(`/api/auth/${service}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/${service}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(credentials),
@@ -50,7 +50,7 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
 
   const handleVercelAuth = async () => {
     try {
-      const response = await fetch("/api/auth/vercel", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/vercel`, {
         method: "GET",
         credentials: "include",
       });
@@ -79,7 +79,7 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
 
   const handleNetlifyAuth = async () => {
     try {
-      const response = await fetch("/api/auth/netlify", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/netlify`, {
         method: "GET",
         credentials: "include",
       });
@@ -110,7 +110,7 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
     }
 
     try {
-      const response = await fetch("/api/deploy/vercel", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/deploy/vercel`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ websiteId, pages }),
@@ -133,7 +133,7 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
     }
 
     try {
-      const response = await fetch("/api/deploy/netlify", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/deploy/netlify`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ websiteId, pages }),
@@ -152,7 +152,7 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
   const handleGithubPagesDeployment = async () => {
     if (!isGithubPagesAuthed) {
       try {
-        const response = await fetch("/api/auth/github-pages", {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/github-pages`, {
           method: "GET",
           credentials: "include",
         });
@@ -167,7 +167,7 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
     }
 
     try {
-      const response = await fetch("/api/deploy/github-pages", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/deploy/github-pages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ websiteId, pages }),
@@ -194,8 +194,7 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
       }
   
       // First, check if the API is available
-      const API_URL = 'http://localhost:3000';
-      const response = await fetch(`${API_URL}/api/deploy/surge`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/deploy/surge`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
