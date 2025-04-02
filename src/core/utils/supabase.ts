@@ -1,14 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 
 // Validate environment variables
-if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+if (!import.meta.env.NEXT_PUBLIC_SUPABASE_URL || !import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
   throw new Error('Missing required environment variables: NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY');
 }
 
 // Create a single Supabase client for interacting with your database
 export const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
+  import.meta.env.NEXT_PUBLIC_SUPABASE_URL,
+  import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
 export interface PageData {
