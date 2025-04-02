@@ -29,7 +29,7 @@ app.use('/api/auth/vercel', cors({
 app.use('/api/deploy', surgeRouter);
 app.use('/website', websiteRouter);
 
-const PORT = process.env.PORT || 5174;
+const PORT = process.env.PORT || 3000;
 // Handle client-side routing
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist', 'index.html'));
@@ -46,6 +46,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });

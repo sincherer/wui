@@ -222,7 +222,7 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Surge Deployment Response:", {
-          endpoint: `${API_URL}/api/auth/surge`,
+          endpoint: `${import.meta.env.VITE_API_URL}/api/auth/surge`,
           status: response.status,
           statusText: response.statusText,
           body: errorText || "Empty response"
