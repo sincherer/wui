@@ -5,6 +5,7 @@ import dts from "vite-plugin-dts";
 
 export default defineConfig({
   plugins: [react()],
+  base: '/',
   build: {
     emptyOutDir: true,
     root: './',
