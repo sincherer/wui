@@ -36,22 +36,14 @@ jobs:
       run: pnpm add @rollup/rollup-linux-x64-gnu
 
     - name: Build project
-      run: pnpm build
+      run: pnpm build --config vite.config.live.ts
       env:
         VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
 
-    - name: Install Dependencies
-      run: pnpm install --frozen-lockfile
-
     - name: Run Tests
       run: pnpm test
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: dist
-        path: ./dist
 
 
     - name: Upload artifact
@@ -62,4 +54,4 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
-      timeout-minutes: 1
+      timeout-minutes: 3
