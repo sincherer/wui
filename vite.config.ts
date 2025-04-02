@@ -47,7 +47,7 @@ export default defineConfig({
         "@react-hookz/web",
         "react-arborist",
         "@react-email/render",
-        "react-error-boundary",
+
         "sonner",
         "next-themes",
         "@rjsf/core",

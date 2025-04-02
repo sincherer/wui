@@ -39,8 +39,8 @@ jobs:
     - name: Build Project
       run: pnpm build
       env:
-        VITE_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-        VITE_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4

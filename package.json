@@ -16,10 +16,6 @@
   ],
   "main": "dist/core.js",
   "sideEffects": false,
-  "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
-  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -173,6 +169,7 @@
     "@microsoft/api-extractor": "^7.52.2",
     "@microsoft/clarity": "^1.0.0",
     "@playwright/test": "^1.50.0",
+    "@swc/core": "^1.11.16",
     "@tanstack/eslint-plugin-query": "^5.64.2",
     "@testing-library/react": "^16.2.0",
     "@types/lodash": "^4.17.14",
@@ -213,11 +210,11 @@
     "vitest": "^3.0.4",
     "zod": "^3.24.1"
   },
+  "engines": {
+    "pnpm": "^10.0.0",
+    "node": ">=18.0.0"
+  },
   "msw": {
     "workerDirectory": "public"
-  },
-  "engines": {
-    "node": "20.18.0",
-    "pnpm": "10.0.0"
   }
 }
