@@ -194,7 +194,7 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
       }
   
       // First, check if the API is available
-      const API_URL = 'http://localhost:5174';
+      const API_URL = 'http://localhost:3000';
       const response = await fetch(`${API_URL}/api/deploy/surge`, {
         method: "POST",
         headers: { 
@@ -306,7 +306,7 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
             setSelectedService('vercel');
             setShowAuthModal(true);
           }}>
-          <img src="/vercel-icon.svg" alt="Vercel" className="mr-2 h-4 w-4" />
+          <Globe className="mr-2 h-4 w-4" />
           Deploy to Vercel {isVercelAuthed && "✓"}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => {
@@ -320,7 +320,7 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
             setSelectedService('netlify');
             setShowAuthModal(true);
           }}>
-          <img src="/netlify-icon.svg" alt="Netlify" className="mr-2 h-4 w-4" />
+          <Globe className="mr-2 h-4 w-4" />
           Deploy to Netlify {isNetlifyAuthed && "✓"}
         </DropdownMenuItem>
       </DropdownMenuContent>

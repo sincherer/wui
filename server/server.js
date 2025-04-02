@@ -20,11 +20,11 @@ import cors from 'cors';
 
 app.use('/api/auth/surge', cors({
   credentials: true,
-  origin: 'http://localhost:5173'
+  origin: ['http://localhost:5173', 'https://sincherer.github.io']
 }), surgeAuthRouter);
 app.use('/api/auth/vercel', cors({
   credentials: true,
-  origin: 'http://localhost:5173'
+  origin: ['http://localhost:5173', 'https://sincherer.github.io']
 }), vercelAuthRouter);
 app.use('/api/deploy', surgeRouter);
 app.use('/website', websiteRouter);
