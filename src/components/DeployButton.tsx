@@ -25,7 +25,11 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
 
   const handleServiceAuth = async (service: string, credentials: Record<string, string>) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/${service}`, {
+      const endpoint = service === 'surge' 
+  ? `${import.meta.env.VITE_API_URL}/api/auth/${service}/${websiteId}`
+  : `${import.meta.env.VITE_API_URL}/api/auth/${service}`;
+
+const response = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(credentials),
@@ -193,48 +197,26 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
         throw new Error('No pages to deploy');
       }
   
-      // First, check if the API is available
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/deploy/surge`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/deploy/surge/${websiteId}`, {
         method: "POST",
         headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "X-Requested-With": "XMLHttpRequest"
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({ 
-          websiteId, 
           pages,
-          config: {
-            domain: `${websiteId}.surge.sh`,
-            project: websiteId
-          }
+          domain: `${websiteId}.surge.sh`
         }),
         credentials: "include",
       });
-  
-      // Handle non-JSON responses
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        throw new Error('Invalid response format from server');
-      }
-  
+
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Surge Deployment Response:", {
-          endpoint: `${import.meta.env.VITE_API_URL}/api/auth/surge`,
-          status: response.status,
-          statusText: response.statusText,
-          body: errorText || "Empty response"
-        });
-
-        // Handle automatic account creation response
-        if (response.status === 201) {
-          const result = JSON.parse(errorText);
-          localStorage.setItem('surge_token', result.token);
-          return { success: true, message: 'New account created' };
-        }
-
-        throw new Error(`Authentication failed: ${response.statusText}`);
+        const errorData = await response.json();
+        const errorMap = {
+          SURGE_CLI_MISSING: 'Surge CLI not installed - Run: npm install -g surge',
+          SURGE_AUTH_FAILED: 'Invalid Surge credentials',
+          SURGE_NETWORK_ERROR: 'Cannot connect to Surge servers'
+        };
+        throw new Error(errorMap[errorData.code] || errorData.details || 'Deployment failed');
       }
 
       const result = await response.json();
@@ -243,21 +225,8 @@ export const DeployButton = ({ websiteId, pages }: DeployButtonProps) => {
       }
   
       alert(`Successfully deployed to Surge! Site URL: ${result.surgeUrl}`);
-      alert(`Surge authentication successful! ${result.status === 'SURGE_ACCOUNT_CREATED' ? 'New account created' : ''}`);
     } catch (error) {
       console.error("Surge deployment error:", error);
-      let userMessage = 'Deployment failed';
-      let details = '';
-      
-      if (error.response?.data?.error) {
-        userMessage = error.response.data.error;
-        details = error.response.data.details || '';
-      } else if (error.message.includes('Failed to fetch')) {
-        userMessage = 'Connection to server failed';
-        details = 'Check if backend service is running';
-      }
-
-      alert(`Surge Deployment Error: ${userMessage}\n${details}`);
       alert(`Failed to deploy to Surge: ${error.message}`);
     }
   };

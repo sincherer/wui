@@ -4,7 +4,8 @@ import { surgeConfig } from '../../../config.js';
 
 export const surgeAuthRouter = Router();
 
-surgeAuthRouter.post('/', async (req, res) => {
+surgeAuthRouter.post('/:websiteId', async (req, res) => {
+  const { websiteId } = req.params;
   try {
     const { email, password } = req.body;
     
